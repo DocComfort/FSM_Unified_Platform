@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Base",
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@fsm/config": ["packages/config/src"],
+      "@fsm/types": ["packages/types/src"],
+      "@fsm/core": ["packages/core/src"],
+      "@fsm/ui-web": ["packages/ui-web/src"],
+      "@fsm/ui-native": ["packages/ui-native/src"]
+    }
+  }
+}

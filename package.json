@@ -1,0 +1,58 @@
+{
+  "name": "fsm-unified-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Unified Field Service Management platform for web, mobile, and Supabase edge services.",
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "rimraf node_modules **/node_modules .turbo",
+    "dev": "turbo run dev --parallel",
+    "format": "prettier --write \"{apps,packages,supabase}/**/*.{ts,tsx,js,jsx,json,md,sql}\"",
+    "lint": "turbo run lint",
+    "prepare": "husky",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "keywords": [
+    "fsm",
+    "supabase",
+    "react",
+    "react-native",
+    "monorepo",
+    "turborepo"
+  ],
+  "author": "Doc Comfort Engineering",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/eslint": "^8.56.10",
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "commitlint": "^19.5.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.4.1",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "rimraf": "^6.0.1",
+    "turbo": "^2.1.0",
+    "typescript": "^5.6.3"
+  },
+  "packageManager": "npm@10.9.0"
+}

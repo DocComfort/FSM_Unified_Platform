@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+apps/*/dist/
+apps/*/build/
+packages/*/dist/
+.turbo/
+.turbo-prune/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+.DS_Store
+
+# Environment
+.env
+.env.*
+*.local
+supabase/.env
+
+# Misc
+coverage/
+*.tsbuildinfo

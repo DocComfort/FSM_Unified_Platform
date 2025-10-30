@@ -1,0 +1,16 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "#app/*": ["./app/*"],
+      "@fsm/config": ["../../packages/config/src"],
+      "@fsm/types": ["../../packages/types/src"],
+      "@fsm/core": ["../../packages/core/src"]
+    }
+  },
+  "include": ["app", "src", "index.ts", "App.tsx"]
+}
