@@ -560,6 +560,10 @@ export type Database = {
         Row: {
           attachments: Json | null
           body: string
+          call_duration: number | null
+          call_recording_url: string | null
+          call_sid: string | null
+          call_status: string | null
           communication_type: string
           contact_method: string | null
           created_at: string | null
@@ -581,6 +585,10 @@ export type Database = {
         Insert: {
           attachments?: Json | null
           body: string
+          call_duration?: number | null
+          call_recording_url?: string | null
+          call_sid?: string | null
+          call_status?: string | null
           communication_type: string
           contact_method?: string | null
           created_at?: string | null
@@ -602,6 +610,10 @@ export type Database = {
         Update: {
           attachments?: Json | null
           body?: string
+          call_duration?: number | null
+          call_recording_url?: string | null
+          call_sid?: string | null
+          call_status?: string | null
           communication_type?: string
           contact_method?: string | null
           created_at?: string | null
