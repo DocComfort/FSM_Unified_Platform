@@ -55,6 +55,284 @@ export type Database = {
           },
         ]
       }
+      ai_assistants: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          id: string
+          instructions: string | null
+          max_output_tokens: number | null
+          metadata: Json | null
+          model: string
+          name: string
+          provider: string
+          tags: string[] | null
+          temperature: number | null
+          top_p: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          instructions?: string | null
+          max_output_tokens?: number | null
+          metadata?: Json | null
+          model: string
+          name: string
+          provider: string
+          tags?: string[] | null
+          temperature?: number | null
+          top_p?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          instructions?: string | null
+          max_output_tokens?: number | null
+          metadata?: Json | null
+          model?: string
+          name?: string
+          provider?: string
+          tags?: string[] | null
+          temperature?: number | null
+          top_p?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_assistants_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_document_chunks: {
+        Row: {
+          chunk_index: number
+          content: string
+          created_at: string | null
+          document_id: string
+          embedding: number[] | null
+          id: string
+          metadata: Json | null
+        }
+        Insert: {
+          chunk_index: number
+          content: string
+          created_at?: string | null
+          document_id: string
+          embedding?: number[] | null
+          id?: string
+          metadata?: Json | null
+        }
+        Update: {
+          chunk_index?: number
+          content?: string
+          created_at?: string | null
+          document_id?: string
+          embedding?: number[] | null
+          id?: string
+          metadata?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_document_chunks_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "ai_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_documents: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          id: string
+          metadata: Json | null
+          source: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_documents_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_messages: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          error: string | null
+          id: string
+          metadata: Json | null
+          provider_message_id: string | null
+          role: string
+          session_id: string
+          token_count: number | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          error?: string | null
+          id?: string
+          metadata?: Json | null
+          provider_message_id?: string | null
+          role: string
+          session_id: string
+          token_count?: number | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          error?: string | null
+          id?: string
+          metadata?: Json | null
+          provider_message_id?: string | null
+          role?: string
+          session_id?: string
+          token_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "ai_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_sessions: {
+        Row: {
+          assistant_id: string | null
+          created_at: string | null
+          created_by: string
+          id: string
+          metadata: Json | null
+          status: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          assistant_id?: string | null
+          created_at?: string | null
+          created_by: string
+          id?: string
+          metadata?: Json | null
+          status?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          assistant_id?: string | null
+          created_at?: string | null
+          created_by?: string
+          id?: string
+          metadata?: Json | null
+          status?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_sessions_assistant_id_fkey"
+            columns: ["assistant_id"]
+            isOneToOne: false
+            referencedRelation: "ai_assistants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_sessions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_tasks: {
+        Row: {
+          attempts: number | null
+          created_at: string | null
+          id: string
+          last_error: string | null
+          payload: Json | null
+          priority: number | null
+          processed_at: string | null
+          result: Json | null
+          scheduled_for: string | null
+          status: Database["public"]["Enums"]["ai_task_status"] | null
+          task_type: string
+          updated_at: string | null
+        }
+        Insert: {
+          attempts?: number | null
+          created_at?: string | null
+          id?: string
+          last_error?: string | null
+          payload?: Json | null
+          priority?: number | null
+          processed_at?: string | null
+          result?: Json | null
+          scheduled_for?: string | null
+          status?: Database["public"]["Enums"]["ai_task_status"] | null
+          task_type: string
+          updated_at?: string | null
+        }
+        Update: {
+          attempts?: number | null
+          created_at?: string | null
+          id?: string
+          last_error?: string | null
+          payload?: Json | null
+          priority?: number | null
+          processed_at?: string | null
+          result?: Json | null
+          scheduled_for?: string | null
+          status?: Database["public"]["Enums"]["ai_task_status"] | null
+          task_type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       api_keys: {
         Row: {
           api_key: string
@@ -6988,6 +7266,12 @@ export type Database = {
       }
     }
     Enums: {
+      ai_task_status:
+        | "pending"
+        | "processing"
+        | "completed"
+        | "failed"
+        | "cancelled"
       job_priority: "low" | "medium" | "high" | "emergency"
       job_status:
         | "draft"
@@ -7132,6 +7416,13 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      ai_task_status: [
+        "pending",
+        "processing",
+        "completed",
+        "failed",
+        "cancelled",
+      ],
       job_priority: ["low", "medium", "high", "emergency"],
       job_status: [
         "draft",
