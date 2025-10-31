@@ -1,5 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import type { Customer, ServiceOrder } from '@fsm/types';
+import type { Customer, ServiceOrder, Database } from '@fsm/types';
 
 export interface SupabaseConfig {
   url: string;
@@ -7,21 +7,27 @@ export interface SupabaseConfig {
 }
 
 export class SupabaseService {
-  private readonly client: SupabaseClient;
+  private readonly client: SupabaseClient<Database>;
 
   constructor(config: SupabaseConfig) {
-    this.client = createClient(config.url, config.anonKey);
+    this.client = createClient<Database>(config.url, config.anonKey);
   }
 
   async listCustomers(): Promise<Customer[]> {
-    const { data, error } = await this.client.from('customers').select('*');
+    const { data, error } = await this.client
+      .from('customers')
+      .select('*')
+      .order('company_name', { ascending: true });
     if (error) throw error;
-    return data as Customer[];
+    return data ?? [];
   }
 
-  async listServiceOrders(): Promise<ServiceOrder[]> {
-    const { data, error } = await this.client.from('service_orders').select('*');
+  async listJobs(): Promise<ServiceOrder[]> {
+    const { data, error } = await this.client
+      .from('jobs')
+      .select('*')
+      .order('created_at', { ascending: false });
     if (error) throw error;
-    return data as ServiceOrder[];
+    return data ?? [];
   }
 }

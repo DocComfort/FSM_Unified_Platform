@@ -1,34 +1,15 @@
 export type UUID = string;
 
-export interface BaseEntity {
-  id: UUID;
-  createdAt: string;
-  updatedAt: string;
-}
+import type { Database } from './generated/supabase';
 
-export interface Customer extends BaseEntity {
-  companyName: string;
-  primaryContact: string;
-  email?: string;
-  phone?: string;
-}
+export * from './generated/supabase';
+export type { Database };
 
-export interface ServiceOrder extends BaseEntity {
-  customerId: UUID;
-  technicianId: UUID;
-  status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
-  scheduledStart: string;
-  scheduledEnd?: string;
-  summary: string;
-}
+type Tables = Database['public']['Tables'];
 
-export interface Equipment extends BaseEntity {
-  customerId: UUID;
-  make: string;
-  model: string;
-  serialNumber?: string;
-  installedAt?: string;
-}
+export type Customer = Tables['customers']['Row'];
+export type ServiceOrder = Tables['jobs']['Row'];
+export type Equipment = Tables['equipment']['Row'];
 
 export type EntityMap = {
   customers: Customer;
