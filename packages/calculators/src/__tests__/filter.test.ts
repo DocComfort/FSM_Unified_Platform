@@ -39,6 +39,6 @@ describe("filter calculators", () => {
     ];
     const matches = evaluateFilterCompatibility(filters, 1000, 20, 20);
     expect(matches.length).toBe(2);
-    expect(matches[0].estimatedPressure).toBeLessThan(matches[1].estimatedPressure);
+    expect(matches[0]!.estimatedPressure).toBeLessThan(matches[1]!.estimatedPressure);
   });
 });

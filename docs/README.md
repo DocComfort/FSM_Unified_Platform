@@ -11,7 +11,7 @@ This directory centralizes architecture decisions, migration guides, API referen
 
 ## Immediate TODOs
 
-1. Draft an ADR outlining the unified Supabase schema approach.
+1. Draft an ADR detailing calculator history persistence (Supabase + device storage).
 2. Document environment setup for contributors (Node, Expo, Supabase CLI, VS Code tasks).
-3. Capture the migration plan for calculators, AI assistants, and Twilio edge functions.
-4. Add testing standards spanning Vitest, Jest/Expo, and pgTAP for database policies.
+3. Capture the rollout plan for AI reporting views and BI dashboards.
+4. Extend testing standards to cover pgTAP execution (`supabase db test`) alongside Vitest/Jest suites.

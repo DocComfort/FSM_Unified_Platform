@@ -49,14 +49,18 @@ export interface FilterCompatibilityResult extends FilterData {
   status: CompatibilityStatus;
 }
 
-const CLIMATE_ZONES = {
+type ClimateZoneKey = BasicFilterInput['climateZone'];
+type FilterTypeKey = BasicFilterInput['filterType'];
+type FilterVelocityKey = 300 | 350 | 400;
+
+const CLIMATE_ZONES: Record<ClimateZoneKey, { cfmPerTon: number }> = {
   'hot-humid': { cfmPerTon: 350 },
   moist: { cfmPerTon: 400 },
   dry: { cfmPerTon: 450 },
   marine: { cfmPerTon: 400 },
-} as const;
+};
 
-const FILTER_TYPES = {
+const FILTER_TYPES: Record<FilterTypeKey, { initialPressureDrops: Record<FilterVelocityKey, number> }> = {
   fiberglass: {
     initialPressureDrops: { 300: 0.05, 350: 0.08, 400: 0.12 },
   },
@@ -69,7 +73,7 @@ const FILTER_TYPES = {
   'pleated-best': {
     initialPressureDrops: { 300: 0.2, 350: 0.25, 400: 0.3 },
   },
-} as const;
+};
 
 const MAX_FACE_VELOCITY = 350;
 
@@ -90,7 +94,7 @@ export function calculateBasicFilterParameters(input: BasicFilterInput): BasicFi
   const faceVelocity = filterArea > 0 ? totalCfm / filterArea : 0;
 
   const filterConfig = FILTER_TYPES[filterType];
-  let initialPressureDrop = filterConfig.initialPressureDrops[400];
+  let initialPressureDrop: number = filterConfig.initialPressureDrops[400];
   if (faceVelocity <= 300) {
     initialPressureDrop = filterConfig.initialPressureDrops[300];
   } else if (faceVelocity <= 350) {
@@ -162,7 +166,7 @@ export function evaluateFilterCompatibility(
       if (!filter.size) return false;
       const parts = filter.size.split('x').map((part) => parseFloat(part));
       if (parts.length !== 2) return false;
-      const [filterLength, filterWidth] = parts;
+      const [filterLength, filterWidth] = parts as [number, number];
       return (
         Number.isFinite(filterLength) &&
         Number.isFinite(filterWidth) &&

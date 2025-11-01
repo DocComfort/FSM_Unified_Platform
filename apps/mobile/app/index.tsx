@@ -1,40 +1,38 @@
-import { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Stack, Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+const calculators = [
+  { title: 'Airflow predictor', description: 'Project static pressure changes and log fan measurements.', href: '/calculators/airflow' },
+  { title: 'Duct sizing', description: 'Size round/rectangular ducts and capture velocity warnings.', href: '/calculators/duct' },
+  { title: 'Manual J estimator', description: 'Estimate sensible/latent loads and recommended tonnage.', href: '/calculators/manual-j' },
+  { title: 'Filter performance', description: 'Check face velocity and delta-P for filter selections.', href: '/calculators/filter' },
+];
 
 export default function HomeScreen() {
-  const [status] = useState('Mobile scaffold ready for unified FSM experience.');
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <StatusBar style="light" />
-      <View style={styles.content}>
+      <Stack.Screen options={{ title: 'Technician Hub', headerShown: false }} />
+
+      <View style={styles.header}>
         <Text style={styles.kicker}>FSM Unified Platform</Text>
-        <Text style={styles.title}>Technician app scaffold online.</Text>
+        <Text style={styles.title}>Calculators & diagnostics</Text>
         <Text style={styles.subtitle}>
-          Replace this placeholder with authentication, offline sync flows, and job dashboards as we
-          merge modules from the legacy mobile repositories.
+          Launch calculators, review saved runs, and sync with Supabase history once you sign in. Saved sessions
+          stay on-device when offline.
         </Text>
+      </View>
 
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Status</Text>
-          <Text style={styles.cardText}>{status}</Text>
-        </View>
-
-        <View style={styles.grid}>
-          <View style={styles.gridCard}>
-            <Text style={styles.gridTitle}>Immediate Tasks</Text>
-            <Text style={styles.gridText}>- Connect Supabase auth session bridge.</Text>
-            <Text style={styles.gridText}>- Bring in offline storage + sync engine.</Text>
-            <Text style={styles.gridText}>- Implement navigation shell and theming.</Text>
-          </View>
-          <View style={styles.gridCard}>
-            <Text style={styles.gridTitle}>Shared Modules</Text>
-            <Text style={styles.gridText}>- Diagnostics & calculators (from BOLT).</Text>
-            <Text style={styles.gridText}>- Inventory & scheduling (HVAC Pro core).</Text>
-            <Text style={styles.gridText}>- Twilio communications (Docs-Fantastic).</Text>
-          </View>
-        </View>
+      <View style={styles.grid}>
+        {calculators.map((item) => (
+          <Link href={item.href} key={item.href} asChild>
+            <TouchableOpacity activeOpacity={0.85} style={styles.card}>
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text style={styles.cardDescription}>{item.description}</Text>
+            </TouchableOpacity>
+          </Link>
+        ))}
       </View>
     </ScrollView>
   );
@@ -46,13 +44,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#020617',
     paddingHorizontal: 24,
     paddingVertical: 48,
+    gap: 20,
   },
-  content: {
-    gap: 24,
+  header: {
+    gap: 12,
   },
   kicker: {
     color: '#34d399',
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -67,42 +66,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
   },
-  card: {
-    backgroundColor: '#0f172a',
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: '#1e293b',
-    padding: 20,
-  },
-  cardTitle: {
-    color: '#86efac',
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  cardText: {
-    color: '#e2e8f0',
-    fontSize: 16,
-  },
   grid: {
     gap: 16,
   },
-  gridCard: {
+  card: {
     backgroundColor: '#111827',
     borderRadius: 16,
     borderWidth: 1,
     borderColor: '#1f2937',
-    padding: 18,
+    padding: 20,
+    gap: 8,
   },
-  gridTitle: {
-    color: '#bae6fd',
-    fontSize: 17,
+  cardTitle: {
+    color: '#f1f5f9',
+    fontSize: 18,
     fontWeight: '600',
-    marginBottom: 6,
   },
-  gridText: {
-    color: '#d1d5db',
-    fontSize: 15,
-    marginBottom: 4,
+  cardDescription: {
+    color: '#cbd5f5',
+    fontSize: 14,
+    lineHeight: 20,
   },
 });

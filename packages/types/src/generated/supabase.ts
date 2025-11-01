@@ -196,6 +196,51 @@ export type Database = {
           },
         ]
       }
+      ai_message_feedback: {
+        Row: {
+          comment: string | null
+          created_at: string | null
+          created_by: string
+          id: string
+          label: string | null
+          message_id: string
+          rating: number | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string | null
+          created_by: string
+          id?: string
+          label?: string | null
+          message_id: string
+          rating?: number | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string | null
+          created_by?: string
+          id?: string
+          label?: string | null
+          message_id?: string
+          rating?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_message_feedback_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_message_feedback_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "ai_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ai_messages: {
         Row: {
           content: string | null
@@ -233,6 +278,55 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "ai_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "ai_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_session_participants: {
+        Row: {
+          created_at: string | null
+          id: string
+          invited_by: string | null
+          profile_id: string
+          role: Database["public"]["Enums"]["ai_participant_role"]
+          session_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          invited_by?: string | null
+          profile_id: string
+          role?: Database["public"]["Enums"]["ai_participant_role"]
+          session_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          invited_by?: string | null
+          profile_id?: string
+          role?: Database["public"]["Enums"]["ai_participant_role"]
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_session_participants_invited_by_fkey"
+            columns: ["invited_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_session_participants_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_session_participants_session_id_fkey"
             columns: ["session_id"]
             isOneToOne: false
             referencedRelation: "ai_sessions"
@@ -332,6 +426,133 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      ai_tool_invocations: {
+        Row: {
+          assistant_id: string | null
+          completed_at: string | null
+          error: string | null
+          id: string
+          input: Json | null
+          message_id: string | null
+          output: Json | null
+          started_at: string | null
+          status: Database["public"]["Enums"]["ai_tool_status"] | null
+          tool_name: string
+        }
+        Insert: {
+          assistant_id?: string | null
+          completed_at?: string | null
+          error?: string | null
+          id?: string
+          input?: Json | null
+          message_id?: string | null
+          output?: Json | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["ai_tool_status"] | null
+          tool_name: string
+        }
+        Update: {
+          assistant_id?: string | null
+          completed_at?: string | null
+          error?: string | null
+          id?: string
+          input?: Json | null
+          message_id?: string | null
+          output?: Json | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["ai_tool_status"] | null
+          tool_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_tool_invocations_assistant_id_fkey"
+            columns: ["assistant_id"]
+            isOneToOne: false
+            referencedRelation: "ai_assistants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_tool_invocations_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "ai_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_usage_events: {
+        Row: {
+          assistant_id: string | null
+          completion_tokens: number | null
+          cost_cents: number | null
+          created_at: string | null
+          duration_ms: number | null
+          id: string
+          message_id: string | null
+          metadata: Json | null
+          model: string
+          prompt_tokens: number | null
+          provider: string
+          session_id: string | null
+          status: string | null
+          total_tokens: number | null
+        }
+        Insert: {
+          assistant_id?: string | null
+          completion_tokens?: number | null
+          cost_cents?: number | null
+          created_at?: string | null
+          duration_ms?: number | null
+          id?: string
+          message_id?: string | null
+          metadata?: Json | null
+          model: string
+          prompt_tokens?: number | null
+          provider: string
+          session_id?: string | null
+          status?: string | null
+          total_tokens?: number | null
+        }
+        Update: {
+          assistant_id?: string | null
+          completion_tokens?: number | null
+          cost_cents?: number | null
+          created_at?: string | null
+          duration_ms?: number | null
+          id?: string
+          message_id?: string | null
+          metadata?: Json | null
+          model?: string
+          prompt_tokens?: number | null
+          provider?: string
+          session_id?: string | null
+          status?: string | null
+          total_tokens?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_usage_events_assistant_id_fkey"
+            columns: ["assistant_id"]
+            isOneToOne: false
+            referencedRelation: "ai_assistants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_usage_events_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "ai_messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_usage_events_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "ai_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       api_keys: {
         Row: {
@@ -527,6 +748,50 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      calculator_run_history: {
+        Row: {
+          calculator_type: string
+          created_at: string | null
+          device_id: string | null
+          id: string
+          input_payload: Json
+          notes: string | null
+          platform: string | null
+          profile_id: string | null
+          result_payload: Json | null
+        }
+        Insert: {
+          calculator_type: string
+          created_at?: string | null
+          device_id?: string | null
+          id?: string
+          input_payload: Json
+          notes?: string | null
+          platform?: string | null
+          profile_id?: string | null
+          result_payload?: Json | null
+        }
+        Update: {
+          calculator_type?: string
+          created_at?: string | null
+          device_id?: string | null
+          id?: string
+          input_payload?: Json
+          notes?: string | null
+          platform?: string | null
+          profile_id?: string | null
+          result_payload?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "calculator_run_history_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       collaboration_sessions: {
         Row: {
@@ -6925,6 +7190,27 @@ export type Database = {
       }
     }
     Views: {
+      ai_tool_status_summary: {
+        Row: {
+          invocation_count: number | null
+          messages_processed: number | null
+          status: Database["public"]["Enums"]["ai_tool_status"] | null
+          tool_name: string | null
+        }
+        Relationships: []
+      }
+      ai_usage_daily_metrics: {
+        Row: {
+          avg_duration_ms: number | null
+          invocation_count: number | null
+          model: string | null
+          provider: string | null
+          total_cost_cents: number | null
+          total_tokens: number | null
+          usage_date: string | null
+        }
+        Relationships: []
+      }
       employee_benefits_summary: {
         Row: {
           benefit_name: string | null
@@ -7266,12 +7552,14 @@ export type Database = {
       }
     }
     Enums: {
+      ai_participant_role: "owner" | "collaborator" | "viewer"
       ai_task_status:
         | "pending"
         | "processing"
         | "completed"
         | "failed"
         | "cancelled"
+      ai_tool_status: "queued" | "running" | "succeeded" | "failed"
       job_priority: "low" | "medium" | "high" | "emergency"
       job_status:
         | "draft"
@@ -7416,6 +7704,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      ai_participant_role: ["owner", "collaborator", "viewer"],
       ai_task_status: [
         "pending",
         "processing",
@@ -7423,6 +7712,7 @@ export const Constants = {
         "failed",
         "cancelled",
       ],
+      ai_tool_status: ["queued", "running", "succeeded", "failed"],
       job_priority: ["low", "medium", "high", "emergency"],
       job_status: [
         "draft",
